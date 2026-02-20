@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Configuration.holdBrowserOpen;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -19,7 +20,7 @@ public class TestBoxTests {
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com/";
         Configuration.pageLoadTimeout = 120_000;
-        Configuration.holdBrowserOpen = true;
+        holdBrowserOpen = true;
     }
 
     @Test
