@@ -1,6 +1,8 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +22,12 @@ public class TestBoxTests {
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com/";
         Configuration.pageLoadTimeout = 120_000;
-        holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
+    }
+
+    @AfterEach() // не поняла, почему у меня окна браузера в итоге не закрываются
+    void closeBrowser() {
+        closeWebDriver();
     }
 
     @Test
@@ -44,7 +51,7 @@ public class TestBoxTests {
         $("[id =hobbies-checkbox-2]").click();
         $("[id =uploadPicture]").uploadFile(new File("src/test/resources/file.png"));
         $("[id = currentAddress]").setValue("First street 1");
-        $("[id = state]").scrollTo().click(); //тест падал из-за невозможности кликнуть по элементу, рекламу я не видела, поэтому сделала скролл, не знаю насколько это правильно
+        $("[id = state]").scrollTo().click();
         $("[id =react-select-3-input]").click();
         $(byText("Uttar Pradesh")).click();
         $("[id =react-select-4-input]").click();
