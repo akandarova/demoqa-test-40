@@ -75,12 +75,25 @@ public class TestBoxTests {
         $("[id = lastName]").setValue("Ivanov");
         $("label[for='gender-radio-1']").click();
         $("[id = userNumber]").setValue("8900562321");
-        $("[id = state]").scrollTo().click(); //тест падал из-за невозможности кликнуть по элементу, рекламу я не видела, поэтому сделала скролл, не знаю насколько это правильно
-        $("#submit").click();
+        $("#submit").scrollTo().click();
 
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Alex Ivanov"));
         $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
         $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("8900562321"));
+
+    }
+
+    @Test
+    void NegativeEmptyfieldTest() {
+        open("");
+        $$(".card-body").findBy(text("Forms")).click();
+        $$(".router-link").findBy(text("Practice Form")).click();
+        $("[id = firstName]").setValue("Alex");
+        $("[id = userNumber]").setValue("8900562321");
+        $("#submit").scrollTo().click();
+
+        $("[id = lastName]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("#genterWrapper").$(byText("Male")).shouldHave(cssValue("color", "rgba(220, 53, 69, 1)"));
 
     }
 }
