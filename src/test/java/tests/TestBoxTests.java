@@ -1,7 +1,6 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -40,14 +39,14 @@ public class TestBoxTests {
         $(byText("2000")).click();
         $(".react-datepicker__month").$(byText("14")).click();
         $("[id=subjectsInput").setValue("o");
-        $(byText("Commerce")).click();;
+        $(byText("Commerce")).click();
         $("[id =hobbies-checkbox-2]").click();
         $("[id =uploadPicture]").uploadFile(new File("src/test/resources/file.png"));
         $("[id = currentAddress]").setValue("First street 1");
         $("[id = state]").scrollTo().click(); //тест падал из-за невозможности кликнуть по элементу, рекламу я не видела, поэтому сделала скролл, не знаю насколько это правильно
-        $("[id =react-select-3-input]").click();;
+        $("[id =react-select-3-input]").click();
         $(byText("Uttar Pradesh")).click();
-        $("[id =react-select-4-input]").click();;
+        $("[id =react-select-4-input]").click();
         $(byText("Lucknow")).click();
         $("#submit").click();
 
