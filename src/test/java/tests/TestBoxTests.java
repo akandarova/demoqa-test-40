@@ -51,9 +51,7 @@ public class TestBoxTests {
         $(byText("Lucknow")).click();
         $("#submit").click();
 
-
         //Selenide.executeJavaScript("document.querySelector('.ad-container').remove();"); он был нужен, когда пыталась решить проблему с недоступностью элемента
-
 
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Alex Ivanov"));
         $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text("AlexIvanov@mail.ru"));
@@ -66,6 +64,23 @@ public class TestBoxTests {
         $(".table-responsive").$(byText("Address")).parent().shouldHave(text("First street 1"));
         $(".table-responsive").$(byText("State and City")).parent().shouldHave(text("Uttar Pradesh Lucknow"));
 
+    }
+
+    @Test
+    void checkMustHaveFormTest() {
+        open("");
+        $$(".card-body").findBy(text("Forms")).click();
+        $$(".router-link").findBy(text("Practice Form")).click();
+        $("[id = firstName]").setValue("Alex");
+        $("[id = lastName]").setValue("Ivanov");
+        $("label[for='gender-radio-1']").click();
+        $("[id = userNumber]").setValue("8900562321");
+        $("[id = state]").scrollTo().click(); //тест падал из-за невозможности кликнуть по элементу, рекламу я не видела, поэтому сделала скролл, не знаю насколько это правильно
+        $("#submit").click();
+
+        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Alex Ivanov"));
+        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
+        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("8900562321"));
 
     }
 }
