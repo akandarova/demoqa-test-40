@@ -32,7 +32,7 @@ public class TestBoxTests {
         $("[id = lastName]").setValue("Ivanov");
         $("[id = userEmail]").setValue("AlexIvanov@mail.ru");
         $("label[for='gender-radio-1']").click();
-        $("[id = userNumber]").setValue("8900562321");
+        $("[id = userNumber]").setValue("8900562323");
         $("[id =dateOfBirthInput]").click();
         $(".react-datepicker__month-select").click();
         $(byText("June")).click();
@@ -56,7 +56,7 @@ public class TestBoxTests {
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Alex Ivanov"));
         $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text("AlexIvanov@mail.ru"));
         $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
-        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("8900562321"));
+        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("8900562323"));
         $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("14 June,2000"));
         $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text("Commerce"));
         $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text("Reading"));
@@ -74,12 +74,12 @@ public class TestBoxTests {
         $("[id = firstName]").setValue("Alex");
         $("[id = lastName]").setValue("Ivanov");
         $("label[for='gender-radio-1']").click();
-        $("[id = userNumber]").setValue("8900562321");
+        $("[id = userNumber]").setValue("8900562323");
         $("#submit").scrollTo().click();
 
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Alex Ivanov"));
         $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
-        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("8900562321"));
+        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("8900562323"));
 
     }
 
@@ -89,11 +89,42 @@ public class TestBoxTests {
         $$(".card-body").findBy(text("Forms")).click();
         $$(".router-link").findBy(text("Practice Form")).click();
         $("[id = firstName]").setValue("Alex");
-        $("[id = userNumber]").setValue("8900562321");
+        $("[id = userNumber]").setValue("8900562323");
         $("#submit").scrollTo().click();
 
         $("[id = lastName]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
         $("#genterWrapper").$(byText("Male")).shouldHave(cssValue("color", "rgba(220, 53, 69, 1)"));
+
+    }
+
+    @Test
+    void NegativeWrongEmailTest() {
+        open("");
+        $$(".card-body").findBy(text("Forms")).click();
+        $$(".router-link").findBy(text("Practice Form")).click();
+        $("[id = firstName]").setValue("Alex");
+        $("[id = lastName]").setValue("Ivanov");
+        $("[id = userEmail]").setValue("AlexIvanov@mail.ru889");
+        $("label[for='gender-radio-1']").click();
+        $("[id = userNumber]").setValue("8900562323");
+        $("#submit").scrollTo().click();
+
+        $("[id = userEmail]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+
+    }
+
+    @Test
+    void NegativeWrongNumberTest() {
+        open("");
+        $$(".card-body").findBy(text("Forms")).click();
+        $$(".router-link").findBy(text("Practice Form")).click();
+        $("[id = firstName]").setValue("Alex");
+        $("[id = lastName]").setValue("Ivanov");
+        $("label[for='gender-radio-1']").click();
+        $("[id = userNumber]").setValue("8900");
+        $("#submit").scrollTo().click();
+
+        $("[id = userNumber]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
 
     }
 }
