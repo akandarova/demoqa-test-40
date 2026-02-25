@@ -5,8 +5,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.cssValue;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -22,8 +20,7 @@ public class TestBoxTests {
         Configuration.pageLoadTimeout = 50_000;
     }
 
-    @AfterEach()
-        // не поняла, почему у меня окна браузера в итоге не закрываются
+    @AfterEach
     void closeBrowser() {
         closeWebDriver();
     }
@@ -31,28 +28,32 @@ public class TestBoxTests {
     @Test
     void checkFullFormTest() {
         open("");
+        executeJavaScript("""
+                document.getElementById('fixedban')?.remove();
+                document.querySelector('footer')?.remove();
+                """);
         $$(".card-body").findBy(text("Forms")).click();
         $$(".router-link").findBy(text("Practice Form")).click();
-        $("[id = firstName]").setValue("Alex");
-        $("[id = lastName]").setValue("Ivanov");
-        $("[id = userEmail]").setValue("AlexIvanov@mail.ru");
+        $("#firstName").setValue("Alex");
+        $("#lastName").setValue("Ivanov");
+        $("#userEmail").setValue("AlexIvanov@mail.ru");
         $("label[for='gender-radio-1']").click();
-        $("[id = userNumber]").setValue("8900562323");
-        $("[id =dateOfBirthInput]").click();
+        $("#userNumber").setValue("8900562323");
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").click();
         $(byText("June")).click();
         $(".react-datepicker__year-select").click();
         $(byText("2000")).click();
         $(".react-datepicker__month").$(byText("14")).click();
-        $("[id=subjectsInput").setValue("o");
+        $("#subjectsInput").setValue("o");
         $(byText("Commerce")).click();
-        $("[id =hobbies-checkbox-2]").click();
-        $("[id =uploadPicture]").uploadFile(new File("src/test/resources/file.png"));
-        $("[id = currentAddress]").setValue("First street 1");
-        $("[id = state]").scrollTo().click();
-        $("[id =react-select-3-input]").click();
+        $("#hobbies-checkbox-2").click();
+        $("#uploadPicture").uploadFromClasspath("file.png");
+        $("#currentAddress").setValue("First street 1");
+        $("#state").scrollTo().click();
+        $("#react-select-3-input").click();
         $(byText("Uttar Pradesh")).click();
-        $("[id =react-select-4-input]").click();
+        $("#react-select-4-input").click();
         $(byText("Lucknow")).click();
         $("#submit").click();
 
@@ -76,10 +77,10 @@ public class TestBoxTests {
         open("");
         $$(".card-body").findBy(text("Forms")).click();
         $$(".router-link").findBy(text("Practice Form")).click();
-        $("[id = firstName]").setValue("Alex");
-        $("[id = lastName]").setValue("Ivanov");
+        $("#firstName").setValue("Alex");
+        $("#lastName").setValue("Ivanov");
         $("label[for='gender-radio-1']").click();
-        $("[id = userNumber]").setValue("8900562323");
+        $("#userNumber").setValue("8900562323");
         $("#submit").scrollTo().click();
 
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Alex Ivanov"));
@@ -89,47 +90,47 @@ public class TestBoxTests {
     }
 
     @Test
-    void NegativeEmptyfieldTest() {
+    void negativeEmptyfieldTest() {
         open("");
         $$(".card-body").findBy(text("Forms")).click();
         $$(".router-link").findBy(text("Practice Form")).click();
-        $("[id = firstName]").setValue("Alex");
-        $("[id = userNumber]").setValue("8900562323");
+        $("#firstName").setValue("Alex");
+        $("#userNumber").setValue("8900562323");
         $("#submit").scrollTo().click();
 
-        $("[id = lastName]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("#lastName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
         $("#genterWrapper").$(byText("Male")).shouldHave(cssValue("color", "rgba(220, 53, 69, 1)"));
 
     }
 
     @Test
-    void NegativeWrongEmailTest() {
+    void negativeWrongEmailTest() {
         open("");
         $$(".card-body").findBy(text("Forms")).click();
         $$(".router-link").findBy(text("Practice Form")).click();
-        $("[id = firstName]").setValue("Alex");
-        $("[id = lastName]").setValue("Ivanov");
-        $("[id = userEmail]").setValue("AlexIvanov@mail.ru889");
+        $("#firstName").setValue("Alex");
+        $("#lastName").setValue("Ivanov");
+        $("#userEmail").setValue("AlexIvanov@mail.ru889");
         $("label[for='gender-radio-1']").click();
-        $("[id = userNumber]").setValue("8900562323");
+        $("#userNumber").setValue("8900562323");
         $("#submit").scrollTo().click();
 
-        $("[id = userEmail]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("#userEmail").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
 
     }
 
     @Test
-    void NegativeWrongNumberTest() {
+    void negativeWrongNumberTest() {
         open("");
         $$(".card-body").findBy(text("Forms")).click();
         $$(".router-link").findBy(text("Practice Form")).click();
-        $("[id = firstName]").setValue("Alex");
-        $("[id = lastName]").setValue("Ivanov");
+        $("#firstName").setValue("Alex");
+        $("#lastName").setValue("Ivanov");
         $("label[for='gender-radio-1']").click();
-        $("[id = userNumber]").setValue("8900");
+        $("#userNumber").setValue("8900");
         $("#submit").scrollTo().click();
 
-        $("[id = userNumber]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
 
     }
 }
