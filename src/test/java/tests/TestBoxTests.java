@@ -1,31 +1,29 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Configuration.holdBrowserOpen;
+import static com.codeborne.selenide.Condition.cssValue;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class TestBoxTests {
-
 
     @BeforeAll
     static void setUp() {
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com/";
-        Configuration.pageLoadTimeout = 120_000;
-        Configuration.holdBrowserOpen = true;
+        Configuration.pageLoadTimeout = 50_000;
     }
 
-    @AfterEach() // не поняла, почему у меня окна браузера в итоге не закрываются
+    @AfterEach()
+        // не поняла, почему у меня окна браузера в итоге не закрываются
     void closeBrowser() {
         closeWebDriver();
     }

@@ -2,9 +2,6 @@ package tests;
 
 import org.junit.jupiter.api.*;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-
 public class SimpleJUnitTest {
 
     int result;
@@ -15,7 +12,7 @@ public class SimpleJUnitTest {
     }
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         System.out.println("###       beforeEach()");
         result = getResult();
     }
@@ -49,7 +46,7 @@ public class SimpleJUnitTest {
         Assertions.assertTrue(result > 2);
     }
 
-    private int getResult(){
+    private int getResult() {
         return 3;
     }
 }
