@@ -38,7 +38,7 @@ public class TestBoxTests {
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(userEmail);
-        $("#genterWrapper").$(byText("Female")).click();
+        $("#genterWrapper").$(byText(userGender)).click();
         $("#userNumber").setValue(userNumber);
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").$(byText(monthOfBirth)).click();
@@ -46,7 +46,7 @@ public class TestBoxTests {
         $(".react-datepicker__day--0" + dayOfBirth +":not(.react-datepicker__month)").click();
         $("#subjectsInput").setValue(userSubject).pressEnter();
         $("#hobbiesWrapper").$(byText(userHobbie)).click();
-        $("#uploadPicture").uploadFile(userFile);
+        $("#uploadPicture").uploadFromClasspath (userFile);
         $("#currentAddress").setValue(currentAddress);
         $("#state").click();
         $("#react-select-3-input").setValue(userState).pressEnter();
