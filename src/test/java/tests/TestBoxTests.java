@@ -56,12 +56,12 @@ public class TestBoxTests {
 
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(firstName + " " + lastName));
         $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text(userEmail));
-        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
+        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text(userGender));
         $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
         $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("14 June,2000"));
-        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text("Commerce"));
-        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text("Music"));
-        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("file.png"));
+        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text(userSubject));
+        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text(userHobbie));
+        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text(userFile));
         $(".table-responsive").$(byText("Address")).parent().shouldHave(text(currentAddress));
         $(".table-responsive").$(byText("State and City")).parent().shouldHave(text(userState + " " + userCity));
     }
@@ -77,12 +77,12 @@ public class TestBoxTests {
         $$(".router-link").findBy(text("Practice Form")).click();
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
-        $("#genterWrapper").$(byText("Female")).click();
+        $("#genterWrapper").$(byText(userGender)).click();
         $("#userNumber").setValue(userNumber);
         $("#submit").scrollTo().click();
 
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(firstName + " " + lastName));
-        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
+        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text(userGender));
         $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
 
     }
@@ -116,7 +116,7 @@ public class TestBoxTests {
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(userEmail+"889");
-        $("#genterWrapper").$(byText("Female")).click();
+        $("#genterWrapper").$(byText(userGender)).click();
         $("#userNumber").setValue(userNumber);
         $("#submit").scrollTo().click();
 
@@ -134,7 +134,7 @@ public class TestBoxTests {
         $$(".router-link").findBy(text("Practice Form")).click();
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
-        $("#genterWrapper").$(byText("Female")).click();
+        $("#genterWrapper").$(byText(userGender)).click();
         $("#userNumber").setValue("8900");
         $("#submit").scrollTo().click();
 
