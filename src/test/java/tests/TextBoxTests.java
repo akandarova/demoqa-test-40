@@ -1,166 +1,90 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import pages.TextBoxPage;
 
-import static com.codeborne.selenide.Condition.cssValue;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
 import static tests.testData.TestData.*;
 
-public class TextBoxTests {
-    TextBoxPage textBoxPage = new TextBoxPage();
-
-    @BeforeAll
-    static void setUp() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.baseUrl = "https://demoqa.com/";
-        Configuration.pageLoadTimeout = 50_000;
-    }
-
-    @AfterEach
-    void closeBrowser() {
-        closeWebDriver();
-    }
-
+public class TextBoxTests extends TestBase {
     @Test
-    void checkFullFormTest() {
-        textBoxPage.openPage();
-        //open("");
-        executeJavaScript("""
-                document.getElementById('fixedban')?.remove();
-                document.querySelector('footer')?.remove();
-                """);
-        $$(".card-body").findBy(text("Forms")).click();
-        $$(".router-link").findBy(text("Practice Form")).click();
-        textBoxPage.typeFirstName(firstName);
-        textBoxPage.typeUserEmail(userEmail);
-        textBoxPage.typeLastName(lastName);
+    void succssfullRegistrationTest() {
+        registrationPage.openPage()
+                .typeFirstName(firstName)
+                .typeLastName(lastName)
+                .typeUserEmail(userEmail)
+                .setGender(userGender)
+                .typeUserNumber(userNumber)
+                .setDateOfBirth(dayOfBirth, monthOfBirth, yearOfBirth)
+                .typeSubject(userSubject)
+                .setHobbies(userHobbie)
+                .typeFile(userFile)
+                .typeCurrentAddress(currentAddress)
+                .setStateAndCity(userState, userCity)
+                .submitForm();
 
-        //$("#firstName").setValue(firstName);
-        //$("#lastName").setValue(lastName);
-        //$("#userEmail").setValue(userEmail);
-        $("label[for='gender-radio-1']").click();
-        $("#userNumber").setValue(userNumber);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").click();
-        $(byText("June")).click();
-        $(".react-datepicker__year-select").click();
-        $(byText("2000")).click();
-        $(".react-datepicker__month").$(byText("14")).click();
-        $("#subjectsInput").setValue("o");
-        $(byText("Commerce")).click();
-        $("#hobbies-checkbox-2").click();
-        $("#uploadPicture").uploadFromClasspath("file.png");
-        textBoxPage.typeCurrentAddress(currentAddress);
-        //$("#currentAddress").setValue(currentAddress);
-        $("#state").scrollTo().click();
-        $("#react-select-3-input").click();
-        $(byText("Uttar Pradesh")).click();
-        $("#react-select-4-input").click();
-        $(byText("Lucknow")).click();
-        textBoxPage.submitForm();
-        //$("#submit").click();
+        tableResults.modalDialog();
 
-        //Selenide.executeJavaScript("document.querySelector('.ad-container').remove();"); он был нужен, когда пыталась решить проблему с недоступностью элемента
-
-        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(firstName + " " + lastName));
-        textBoxPage.checkField("userEmail", userEmail);
-        //$(".table-responsive").$(byText("Student Email")).parent().shouldHave(text(userEmail));
-        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
-        textBoxPage.checkField("userNumber", userNumber);
-        //$(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
-        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("14 June,2000"));
-        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text("Commerce"));
-        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text("Reading"));
-        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("file.png"));
-        textBoxPage.checkField("Address", currentAddress);
-        //$(".table-responsive").$(byText("Address")).parent().shouldHave(text(currentAddress));
-        $(".table-responsive").$(byText("State and City")).parent().shouldHave(text("Uttar Pradesh Lucknow"));
-
+        tableResults.checkResults("Student Name", firstName + " " + lastName)
+                .checkResults("Student Email", userEmail)
+                .checkResults("Gender", userGender)
+                .checkResults("Mobile", userNumber)
+                .checkResults("Date of Birth", dayOfBirth)
+                .checkResults("Subjects", userSubject)
+                .checkResults("Hobbies", userHobbie)
+                .checkResults("Picture", userFile)
+                .checkResults("Address", currentAddress)
+                .checkResults("State and City", userState + " " + userCity);
     }
 
     @Test
     void checkMustHaveFormTest() {
-        open("");
-        executeJavaScript("""
-                document.getElementById('fixedban')?.remove();
-                document.querySelector('footer')?.remove();
-                """);
-        $$(".card-body").findBy(text("Forms")).click();
-        $$(".router-link").findBy(text("Practice Form")).click();
-        $("#firstName").setValue(firstName);
-        $("#lastName").setValue(lastName);
-        $("label[for='gender-radio-1']").click();
-        $("#userNumber").setValue(userNumber);
-        $("#submit").scrollTo().click();
+            registrationPage.openPage()
+                    .typeFirstName(firstName)
+                    .typeLastName(lastName)
+                    .setGender(userGender)
+                    .typeUserNumber(userNumber)
+                    .submitForm();
 
-        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(firstName + " " + lastName));
-        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
-        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
+        tableResults.modalDialog();
 
+        tableResults.checkResults("Student Name", firstName + " " + lastName)
+                .checkResults("Gender", userGender)
+                .checkResults("Mobile", userNumber);
     }
 
     @Test
     void negativeEmptyfieldTest() {
-        open("");
-        executeJavaScript("""
-                document.getElementById('fixedban')?.remove();
-                document.querySelector('footer')?.remove();
-                """);
-        $$(".card-body").findBy(text("Forms")).click();
-        $$(".router-link").findBy(text("Practice Form")).click();
-        $("#firstName").setValue("Alex");
-        $("#userNumber").setValue("8900562323");
-        $("#submit").scrollTo().click();
+        registrationPage.openPage()
+                .typeFirstName(firstName)
+                .typeUserNumber(userNumber)
+                .submitForm();
 
-        $("#lastName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $("#genterWrapper").$(byText("Male")).shouldHave(cssValue("color", "rgba(220, 53, 69, 1)"));
-
+        registrationPage.checkLastNameIsEmpty()
+                        .genderIsEmpty();
     }
 
     @Test
     void negativeWrongEmailTest() {
-        open("");
-        executeJavaScript("""
-                document.getElementById('fixedban')?.remove();
-                document.querySelector('footer')?.remove();
-                """);
-        $$(".card-body").findBy(text("Forms")).click();
-        $$(".router-link").findBy(text("Practice Form")).click();
-        $("#firstName").setValue(firstName);
-        $("#lastName").setValue(lastName);
-        $("#userEmail").setValue(userEmail+"889");
-        $("label[for='gender-radio-1']").click();
-        $("#userNumber").setValue(userNumber);
-        $("#submit").scrollTo().click();
+        registrationPage.openPage()
+                .typeFirstName(firstName)
+                .typeLastName(lastName)
+                .typeUserEmail(userEmail + "889")
+                .setGender(userGender)
+                .typeUserNumber(userNumber)
+                .submitForm();
 
-        $("#userEmail").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-
+        registrationPage.wrongEmail();
     }
 
     @Test
     void negativeWrongNumberTest() {
-        open("");
-        executeJavaScript("""
-                document.getElementById('fixedban')?.remove();
-                document.querySelector('footer')?.remove();
-                """);
-        $$(".card-body").findBy(text("Forms")).click();
-        $$(".router-link").findBy(text("Practice Form")).click();
-        $("#firstName").setValue(firstName);
-        $("#lastName").setValue(lastName);
-        $("label[for='gender-radio-1']").click();
-        $("#userNumber").setValue("8900");
-        $("#submit").scrollTo().click();
+        registrationPage.openPage()
+                .typeFirstName(firstName)
+                .typeLastName(lastName)
+                .setGender(userGender)
+                .typeUserNumber("8900")
+                .submitForm();
 
-        $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-
+        registrationPage.wrongNumber();
     }
 }
 
