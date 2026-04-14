@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static tests.testData.TestData.*;
 
 public class RegistrationPage {
-    // Elements
+    
     CalendarComponent calendar = new CalendarComponent();
 
 
