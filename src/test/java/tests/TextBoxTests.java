@@ -8,6 +8,7 @@ public class TextBoxTests extends TestBase {
     @Test
     void succssfullRegistrationTest() {
         registrationPage.openPage()
+                .removeBanners()
                 .typeFirstName(firstName)
                 .typeLastName(lastName)
                 .typeUserEmail(userEmail)

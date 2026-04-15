@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 
@@ -13,7 +14,8 @@ public class RegistrationPage {
     
     CalendarComponent calendar = new CalendarComponent();
 
-
+    private ElementsCollection cardBody = $$(".card-body");
+    private ElementsCollection routerLink = $$(".router-link");
     private SelenideElement firstNameInput = $("#firstName");
     private SelenideElement lastNameInput = $("#lastName");
     private SelenideElement userEmailInput =  $("#userEmail");
@@ -26,21 +28,29 @@ public class RegistrationPage {
     private SelenideElement stateSelect =  $("#state");
     private SelenideElement citySelect =  $("#city");
     private SelenideElement submitButtom = $("#submit");
+    private SelenideElement dateOfBirth = $("#dateOfBirthInput");
+
 
 
 
     // Actions
     public RegistrationPage openPage(){
         open("");
+        cardBody.findBy(text("Forms")).click();
+        routerLink.findBy(text("Practice Form")).click();
+
+        return this;
+    }
+
+    public RegistrationPage removeBanners(){
         executeJavaScript("""
                 document.getElementById('fixedban')?.remove();
                 document.querySelector('footer')?.remove();
                 """);
-        $$(".card-body").findBy(text("Forms")).click();
-        $$(".router-link").findBy(text("Practice Form")).click();
 
         return this;
     }
+
     public RegistrationPage typeFirstName(String value){
         firstNameInput.setValue(value);
 
@@ -105,7 +115,9 @@ public class RegistrationPage {
         return this;
     }
     public RegistrationPage setDateOfBirth(String day, String month, String year){
-        $("#dateOfBirthInput").click();
+       //$("#dateOfBirthInput").click();
+        dateOfBirth.click();
+        CalendarComponent calendar = new CalendarComponent();
         calendar.setDate(day, month, year);
 
         return this;
