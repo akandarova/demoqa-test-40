@@ -30,9 +30,6 @@ public class RegistrationPage {
     private SelenideElement submitButtom = $("#submit");
     private SelenideElement dateOfBirth = $("#dateOfBirthInput");
 
-
-
-
     // Actions
     public RegistrationPage openPage(){
         open("");
@@ -123,6 +120,7 @@ public class RegistrationPage {
         return this;
     }
     public RegistrationPage submitForm(){
+        submitButtom.scrollTo();
         submitButtom.click();
 
         return this;
