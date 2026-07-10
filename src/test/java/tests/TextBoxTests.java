@@ -2,94 +2,29 @@ package tests;
 
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
+import tests.testData.TestDataFaker;
 
 import static tests.testData.TestData.*;
-import static utils.RandomUtils.getRandomEmail;
-import static utils.RandomUtils.getRandomString;
+
 
 public class TextBoxTests extends TestBase {
+
     @Test
-    void succssfullRegistrationTest_withFaker() {
-    Faker faker = new Faker();
-
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String userEmail = faker.internet().emailAddress();
-        String userGender = "Male";
-        String userNumber = "8900562323";
-        String monthOfBirth = "June";
-        String yearOfBirth = "2000";
-        String dayOfBirth = "14";
-        String userSubject = "Commerce";
-        String userHobbie = "Music";
-        String userFile = "file.png";
-        String userState = "Uttar Pradesh";
-        String userCity = "Lucknow";
-
-//    @Test
-//    void succssfullRegistrationTest() {
-//        registrationPage.openPage()
-//                .removeBanners()
-//                .typeFirstName(firstName)
-//                .typeLastName(lastName)
-//                .typeUserEmail(userEmail)
-//                .setGender(userGender)
-//                .typeUserNumber(userNumber)
-//                .setDateOfBirth(dayOfBirth, monthOfBirth, yearOfBirth)
-//                .typeSubject(userSubject)
-//                .setHobbies(userHobbie)
-//                .typeFile(userFile)
-//                .typeCurrentAddress(currentAddress)
-//                .setStateAndCity(userState, userCity)
-//                .submitForm();
-
-        tableResults.modalDialog();
-
-        tableResults.checkResults("Student Name", firstName + " " + lastName)
-                .checkResults("Student Email", userEmail)
-                .checkResults("Gender", userGender)
-                .checkResults("Mobile", userNumber)
-                .checkResults("Date of Birth", dayOfBirth)
-                .checkResults("Subjects", userSubject)
-                .checkResults("Hobbies", userHobbie)
-                .checkResults("Picture", userFile)
-                .checkResults("Address", currentAddress)
-                .checkResults("State and City", userState + " " + userCity);
-    }
-    @Test
-    void succssfullRegistrationTest_withUtils() {
-        Faker faker = new Faker();
-
-        String firstName = getRandomString(10);
-        String lastName = faker.name().lastName();
-        String userEmail = getRandomEmail();
-        String userGender = "Male";
-        String userNumber = "8900562323";
-        String monthOfBirth = "June";
-        String yearOfBirth = "2000";
-        String dayOfBirth = "14";
-        String userSubject = "Commerce";
-        String userHobbie = "Music";
-        String userFile = "file.png";
-        String userState = "Uttar Pradesh";
-        String userCity = "Lucknow";
-
-//    @Test
-//    void succssfullRegistrationTest() {
-//        registrationPage.openPage()
-//                .removeBanners()
-//                .typeFirstName(firstName)
-//                .typeLastName(lastName)
-//                .typeUserEmail(userEmail)
-//                .setGender(userGender)
-//                .typeUserNumber(userNumber)
-//                .setDateOfBirth(dayOfBirth, monthOfBirth, yearOfBirth)
-//                .typeSubject(userSubject)
-//                .setHobbies(userHobbie)
-//                .typeFile(userFile)
-//                .typeCurrentAddress(currentAddress)
-//                .setStateAndCity(userState, userCity)
-//                .submitForm();
+    void succssfullRegistrationTest() {
+        registrationPage.openPage()
+                .removeBanners()
+                .typeFirstName(TestDataFaker.firstName)
+                .typeLastName(TestDataFaker.lastName)
+                .typeUserEmail(TestDataFaker.userEmail)
+                .setGender(TestDataFaker.userGender)
+                .typeUserNumber(TestDataFaker.userNumber)
+                .setDateOfBirth(TestDataFaker.dayOfBirth, TestDataFaker.monthOfBirth, TestDataFaker.yearOfBirth)
+                .typeSubject(TestDataFaker.userSubject)
+                .setHobbies(TestDataFaker.userHobbie)
+                .typeFile(TestDataFaker.userFile)
+                .typeCurrentAddress(TestDataFaker.currentAddress)
+                .setStateAndCity(TestDataFaker.userState, TestDataFaker.userCity)
+                .submitForm();
 
         tableResults.modalDialog();
 
@@ -108,10 +43,10 @@ public class TextBoxTests extends TestBase {
     @Test
     void checkMustHaveFormTest() {
             registrationPage.openPage()
-                    .typeFirstName(firstName)
-                    .typeLastName(lastName)
-                    .setGender(userGender)
-                    .typeUserNumber(userNumber)
+                    .typeFirstName(TestDataFaker.firstName)
+                    .typeLastName(TestDataFaker.lastName)
+                    .setGender(TestDataFaker.userGender)
+                    .typeUserNumber(TestDataFaker.userNumber)
                     .submitForm();
 
         tableResults.modalDialog();
@@ -124,8 +59,8 @@ public class TextBoxTests extends TestBase {
     @Test
     void negativeEmptyfieldTest() {
         registrationPage.openPage()
-                .typeFirstName(firstName)
-                .typeUserNumber(userNumber)
+                .typeFirstName(TestDataFaker.firstName)
+                .typeUserNumber(TestDataFaker.userNumber)
                 .submitForm();
 
         registrationPage.checkLastNameIsEmpty()
@@ -135,11 +70,11 @@ public class TextBoxTests extends TestBase {
     @Test
     void negativeWrongEmailTest() {
         registrationPage.openPage()
-                .typeFirstName(firstName)
-                .typeLastName(lastName)
-                .typeUserEmail(userEmail + "889")
-                .setGender(userGender)
-                .typeUserNumber(userNumber)
+                .typeFirstName(TestDataFaker.firstName)
+                .typeLastName(TestDataFaker.lastName)
+                .typeUserEmail(TestDataFaker.userEmail + "889")
+                .setGender(TestDataFaker.userGender)
+                .typeUserNumber(TestDataFaker.userNumber)
                 .submitForm();
 
         registrationPage.wrongEmail();
@@ -148,9 +83,8 @@ public class TextBoxTests extends TestBase {
     @Test
     void negativeWrongNumberTest() {
         registrationPage.openPage()
-                .typeFirstName(firstName)
-                .typeLastName(lastName)
-                .setGender(userGender)
+                .typeFirstName(TestDataFaker.firstName)
+                .setGender(TestDataFaker.userGender)
                 .typeUserNumber("8900")
                 .submitForm();
 
